@@ -9,10 +9,11 @@ public class Snake : MonoBehaviour {
 	List<Transform> tail = new List<Transform>();
 	bool ate = false;
 
+	public Transform bottom, top, right, left;
 	public GameObject tailPrefab;
 
 	void Start () {
-		InvokeRepeating("Move", 0.1f, 0.1f);    
+		InvokeRepeating("Move", 0.025f, 0.025f);    
 	}
 	
 	void Update() {
@@ -30,52 +31,40 @@ public class Snake : MonoBehaviour {
 	void Move() {
 		Vector2 v = transform.position;
 
-		transform.Translate(dir);
-
-		
+		transform.Translate(dir);		
 
 		if (ate) {
-		
 			GameObject g =(GameObject)Instantiate(tailPrefab, v,Quaternion.identity);
 
-
 			tail.Insert(0, g.transform);
-			
-
 			ate = false;
-		}
-
-		else if (tail.Count > 0) {
-		
+		} else if (tail.Count > 0) {
 			tail.Last().position = v;
-		
 			tail.Insert(0, tail.Last());
 			tail.RemoveAt(tail.Count-1);
 		}
 	}
 
+	void OnCollisionExit2D(Collision2D collision) {
+		if (collision.transform.position.Equals(transform.position)) {
+			Debug.Log ("giladita");
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.name.StartsWith ("borderBottom")) {
-			transform.Rotate (new Vector2 (-180, 0));
+			transform.position = new Vector3(transform.position.x, top.position.y - 1, 0);
 		} else if (coll.name.StartsWith ("borderTop")) {
-			transform.Rotate (new Vector2 (180, 0));
+			transform.position = new Vector3(transform.position.x, bottom.position.y + 1, 0);
 		} else if (coll.name.StartsWith ("borderLeft")) {
-			transform.Rotate (new Vector2 (0, 180));
+			transform.position = new Vector3(right.position.x - 1, transform.position.y, 0);
 		} else if (coll.name.StartsWith ("borderRight")) {
-			transform.Rotate (new Vector2 (0, -180));
+			transform.position = new Vector3(left.position.x + 1, transform.position.y, 0);
 		}
 
 		if (coll.name.StartsWith("FoodPrefab")) {
-
 			ate = true;
-//			Debug.Log("holis");
-			
-
 			Destroy(coll.gameObject);
-		}
-
-		else {
-			// ToDo 'You lose' screen
 		}
 
 	}
