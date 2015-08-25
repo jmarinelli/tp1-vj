@@ -5,9 +5,11 @@ using System.Linq;
 
 public class Snake : MonoBehaviour {
 
-	Vector2 dir = Vector2.right;
-	List<Transform> tail = new List<Transform>();
-	bool ate = false;
+	private Vector2 dir = Vector2.right;
+	private List<Transform> tail = new List<Transform>();
+	private bool ate = false;
+	public static int score = 0;
+
 
 	public Transform bottom, top, right, left;
 	public GameObject tailPrefab;
@@ -34,6 +36,7 @@ public class Snake : MonoBehaviour {
 		transform.Translate(dir);		
 
 		if (ate) {
+			score += 1;
 			GameObject g =(GameObject)Instantiate(tailPrefab, v,Quaternion.identity);
 
 			tail.Insert(0, g.transform);
