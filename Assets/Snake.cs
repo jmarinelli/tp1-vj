@@ -79,6 +79,15 @@ public class Snake : MonoBehaviour {
 			score += 1;
 			Destroy(coll.gameObject);
 		}
+		if (coll.name.StartsWith("snitch")) {
+			ate = true;
+			score += 15;
+			Destroy(coll.gameObject);
+			if (UnityEditor.EditorUtility.DisplayDialog ("WINNER!", "Atrapaste la snitch! Tu puntaje es: " + score, "Volver a intentar"))
+			{
+				Application.LoadLevel(0);
+			}
+		}
 		setScoreText ();
 	}
 
