@@ -10,7 +10,7 @@ public class Snake : MonoBehaviour {
 	private Vector2 dir = Vector2.right;
 	private List<Transform> tail = new List<Transform>();
 	private bool ate = false;
-	public static int score = 0;
+	public int score = 0;
 	public Text txt;
 
 
@@ -51,7 +51,7 @@ public class Snake : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionExit2D(Collision2D collision) {
+	void OnCollisionEnter2D(Collision2D collision) {
 		if (UnityEditor.EditorUtility.DisplayDialog ("GAME OVER", "Juego finalizado. Su puntaje es: " + score, "Volver a intentar"))
 		{
 			Application.LoadLevel(0);
@@ -83,6 +83,6 @@ public class Snake : MonoBehaviour {
 	}
 
 	void setScoreText(){
-		txt.text="Score : " + Snake.score;
+		txt.text="Score : " + this.score;
 	}
 }
