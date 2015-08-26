@@ -3,20 +3,24 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
+
 
 public class Snake : MonoBehaviour {
 
 	private Vector2 dir = Vector2.right;
 	private List<Transform> tail = new List<Transform>();
 	private bool ate = false;
-	public static int score = 0;
+	public int score = 0;
+	public Text txt;
 
 
 	public Transform bottom, top, right, left;
 	public GameObject tailPrefab;
 
 	void Start () {
-		InvokeRepeating("Move", 0.025f, 0.025f);    
+		InvokeRepeating("Move", 0.025f, 0.025f);
+		setScoreText ();
 	}
 	
 	void Update() {
@@ -37,7 +41,6 @@ public class Snake : MonoBehaviour {
 		transform.Translate(dir);		
 
 		if (ate) {
-			score += 1;
 			GameObject g =(GameObject)Instantiate(tailPrefab, v,Quaternion.identity);
 
 			tail.Insert(0, g.transform);
@@ -49,7 +52,7 @@ public class Snake : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionExit2D(Collision2D collision) {
+	void OnCollisionEnter2D(Collision2D collision) {
 		if (UnityEditor.EditorUtility.DisplayDialog ("GAME OVER", "Juego finalizado. Su puntaje es: " + score, "Volver a intentar"))
 		{
 			Application.LoadLevel("StartScreen");
@@ -69,8 +72,18 @@ public class Snake : MonoBehaviour {
 
 		if (coll.name.StartsWith("FoodPrefab")) {
 			ate = true;
+			score += 2;
 			Destroy(coll.gameObject);
 		}
+		if (coll.name.StartsWith("ApplePrefab")) {
+			ate = true;
+			score += 1;
+			Destroy(coll.gameObject);
+		}
+		setScoreText ();
+	}
 
+	void setScoreText(){
+		txt.text="Score : " + this.score;
 	}
 }
