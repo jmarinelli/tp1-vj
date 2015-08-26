@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ public class Snake : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (UnityEditor.EditorUtility.DisplayDialog ("GAME OVER", "Juego finalizado. Su puntaje es: " + score, "Volver a intentar"))
 		{
-			Application.LoadLevel(0);
+			Application.LoadLevel("StartScreen");
 		}
 	}
 
