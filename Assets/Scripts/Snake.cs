@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +7,19 @@ using UnityEngine.UI;
 
 public class Snake : MonoBehaviour {
 
+	public static Snake instance;
+
 	private Vector2 dir = Vector2.right;
 	private List<Transform> tail = new List<Transform>();
 	private bool ate = false;
 	public int score = 0;
 	public Text txt;
 
-
 	public Transform bottom, top, right, left;
 	public GameObject tailPrefab;
 
 	void Start () {
+		instance = this;
 		InvokeRepeating("Move", 0.025f, 0.025f);
 		setScoreText ();
 	}
@@ -53,10 +54,7 @@ public class Snake : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		if (UnityEditor.EditorUtility.DisplayDialog ("GAME OVER", "Juego finalizado. Su puntaje es: " + score, "Volver a intentar"))
-		{
-			Application.LoadLevel("StartScreen");
-		}
+		Application.LoadLevel ("EndGame");
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
@@ -84,15 +82,12 @@ public class Snake : MonoBehaviour {
 			ate = true;
 			score += 15;
 			Destroy(coll.gameObject);
-			if (UnityEditor.EditorUtility.DisplayDialog ("WINNER!", "Atrapaste la snitch! Tu puntaje es: " + score, "Volver a intentar"))
-			{
-				Application.LoadLevel(0);
-			}
+			Application.LoadLevel ("WinGame");
 		}
 		setScoreText ();
 	}
 
 	void setScoreText(){
-		txt.text="Score : " + this.score;
+		txt.text="Puntaje : " + this.score;
 	}
 }

@@ -18,7 +18,7 @@ public class SpawnFood : MonoBehaviour {
 		InvokeRepeating("Spawn", 4, 7);
 		InvokeRepeating("SpawnApples", 1, 2);
 		InvokeRepeating("SpawnSnitch", 5, 6);
-		InvokeRepeating("DestroySnitch", 7, 8);
+		InvokeRepeating("DestroySnitch", 6, 7);
 	}
 	
 
