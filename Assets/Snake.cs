@@ -52,7 +52,10 @@ public class Snake : MonoBehaviour {
 	}
 
 	void OnCollisionExit2D(Collision2D collision) {
-		Debug.Log ("Perdiste gato");
+		if (UnityEditor.EditorUtility.DisplayDialog ("GAME OVER", "Juego finalizado. Su puntaje es: " + score, "Volver a intentar"))
+		{
+			Application.LoadLevel(0);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
