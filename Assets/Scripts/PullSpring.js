@@ -13,6 +13,7 @@ private var moveCount : float = 0;
 function OnCollisionEnter(_other : Collision) {
 	if(_other.gameObject.tag == "Ball"){
 		ready = true;
+		Debug.Log("Ready");
 	}
 }
 
