@@ -1,29 +1,25 @@
-/*
-Script Created by FlatTutorials for "Car Controller kit".
-*/
 
-@script AddComponentMenu ("FlatTutorials/Scripts/Skidding Script")
+@script AddComponentMenu ("SkiddingScript")
 #pragma strict
-private var currentFrictionValue : float;	//Calculates the current friction on the wheel
-var skidAt : float = 1.5;	//if current friction < skidAt the generate marks
-var soundEmition : float = 15;	//instantiation of (no. of sound prefab per second)
-private var soundWait : float;	//Time counter
-var skidSound : GameObject;		//Skidsound Prefab
-var skidSmoke : GameObject;		//Smoke Particle system
-var smokeDepth : float = 0.4;	//instantiate above the ground
-var markWidth : float = 0.2;	//Skid mark Width
-var startSkid : boolean;		//Burnout FX
-private var skidding : int;		//skidding started or not
-private var lastPos = new Vector3[2]; 	//Saves the last position of skidmark
-var skidMaterial : Material;	//Skidmark texture
+private var currentFrictionValue : float;	
+var skidAt : float = 1.5;	
+var soundEmition : float = 15;	
+private var soundWait : float;	
+var skidSound : GameObject;		
+var skidSmoke : GameObject;		
+var smokeDepth : float = 0.4;	
+var markWidth : float = 0.2;	
+var startSkid : boolean;		
+private var skidding : int;	
+private var lastPos = new Vector3[2]; 
+var skidMaterial : Material;
 
-//Positioning the smoke
+
 function Start () {
 skidSmoke.transform.position = transform.position;
 skidSmoke.transform.position.y -= smokeDepth;
 }
 
-//Friction calculation and triggers for the effects
 function Update () {
 var hit : WheelHit;
 transform.GetComponent(WheelCollider).GetGroundHit(hit);
@@ -44,7 +40,6 @@ skidding = 0;
 }
 }
 
-//Generates skidmarks
 
 function SkidMesh(){
 

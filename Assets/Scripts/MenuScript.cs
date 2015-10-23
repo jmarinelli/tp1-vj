@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour {
-	public InputField chunksInput;
+	public Dropdown sizeDropdown;
 	public Dropdown difficultyInput;
 
 
@@ -25,7 +25,7 @@ public class MenuScript : MonoBehaviour {
 	}
 
 	public void StartGame(){
-		size = int.Parse (chunksInput.text);
+		size = sizeDropdown.value;
 		difficulty = difficultyInput.value;
 		Application.LoadLevel ("Main");
 	}
