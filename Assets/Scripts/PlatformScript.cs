@@ -9,6 +9,7 @@ public class PlatformScript : MonoBehaviour {
 	public Transform spawnPoint;
 	public int maxIterations;
 	public GameObject car;
+	public GameObject finishLine;
 	
 	public void Start() {
 
@@ -58,6 +59,8 @@ public class PlatformScript : MonoBehaviour {
 		InstantiateChunks (matrix);
 		car.transform.position = new Vector3 (iCol * 15, car.transform.position.y, -iRow * 15);
 		car.transform.rotation = Quaternion.AngleAxis (initialChunk.GetComponent<ChunkScript> ().carRotation, Vector3.up);
+		finishLine.transform.position = car.transform.position;
+		finishLine.transform.rotation = car.transform.rotation;
 
 	}
 
