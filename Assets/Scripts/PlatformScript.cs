@@ -5,6 +5,7 @@ public class PlatformScript : MonoBehaviour {
 
 	int length;
 	int size;
+	public int time;
 	public GameObject[] chunks;
 	public Transform spawnPoint;
 	public int maxIterations;
@@ -15,6 +16,7 @@ public class PlatformScript : MonoBehaviour {
 
 		if (MenuScript.size == 0) {
 			size = 4;
+			time = 30;
 			if(MenuScript.difficulty == 0){
 				length = 4;
 			} else if(MenuScript.difficulty == 1){
@@ -24,6 +26,7 @@ public class PlatformScript : MonoBehaviour {
 			}
 		} else if (MenuScript.size == 1) {
 			size = 6;
+			time = 50;
 			if(MenuScript.difficulty == 0){
 				length = 8;
 			} else if(MenuScript.difficulty == 1){
@@ -33,6 +36,7 @@ public class PlatformScript : MonoBehaviour {
 			}
 		} else {
 			size = 10;
+			time = 60;
 			if(MenuScript.difficulty == 0){
 				length = 4;
 			} else if(MenuScript.difficulty == 1){
