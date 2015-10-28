@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlatformScript : MonoBehaviour {
 
-	public int length;
-	public int size;
+	int length;
+	int size;
 	public GameObject[] chunks;
 	public Transform spawnPoint;
 	public int maxIterations;
@@ -13,37 +13,34 @@ public class PlatformScript : MonoBehaviour {
 	
 	public void Start() {
 
-//		if (MenuScript.size == 0) {
-//			size = 3;
-//			if(MenuScript.difficulty == 0){
-//				length = 3;
-//			} else if(MenuScript.difficulty == 1){
-//				length = 5;
-//			} else {
-//				length =8;
-//			}
-//			Debug.Log("Size "+ size + " length " + length);
-//		} else if (MenuScript.size == 1) {
-//			size = 6;
-//			if(MenuScript.difficulty == 0){
-//				length = 8;
-//			} else if(MenuScript.difficulty == 1){
-//				length = 10;
-//			} else {
-//				length =15;
-//			}
-//			Debug.Log("Size " + size + " length " + length);
-//		} else {
-//			size = 10;
-//			if(MenuScript.difficulty == 0){
-//				length = 3;
-//			} else if(MenuScript.difficulty == 1){
-//				length = 45;
-//			} else {
-//				length =50;
-//			}
-//			Debug.Log("Size " + size + " length " + length);
-//		}
+		if (MenuScript.size == 0) {
+			size = 4;
+			if(MenuScript.difficulty == 0){
+				length = 4;
+			} else if(MenuScript.difficulty == 1){
+				length = 6;
+			} else {
+				length =8;
+			}
+		} else if (MenuScript.size == 1) {
+			size = 6;
+			if(MenuScript.difficulty == 0){
+				length = 8;
+			} else if(MenuScript.difficulty == 1){
+				length = 10;
+			} else {
+				length =15;
+			}
+		} else {
+			size = 10;
+			if(MenuScript.difficulty == 0){
+				length = 4;
+			} else if(MenuScript.difficulty == 1){
+				length = 15;
+			} else {
+				length =25;
+			}
+		}
 
 		GameObject[,] matrix = new GameObject[size, size];
 		int iCol = Random.Range (1, size - 1);
@@ -54,14 +51,17 @@ public class PlatformScript : MonoBehaviour {
 		fillChunks(matrix, initialChunk, iRow, iCol, iRow, iCol, length, 1);
 		Debug.Log (initialChunk.transform.position.x);
 		Debug.Log (initialChunk.transform.position.z);
-		print ("\n-------- YEEEEEEEY ----------\n");
 //		PrintMatrix (matrix);
 		InstantiateChunks (matrix);
-		car.transform.position = new Vector3 (iCol * 15, car.transform.position.y, -iRow * 15);
+		car.transform.position = new Vector3 (iCol * 15, car.transform.position.y, iRow * 15);
 		car.transform.rotation = Quaternion.AngleAxis (initialChunk.GetComponent<ChunkScript> ().carRotation, Vector3.up);
-		finishLine.transform.position = car.transform.position;
-		finishLine.transform.rotation = car.transform.rotation;
-
+//		car.transform.position = initialChunk.GetComponent<ChunkScript>().startPosition.position;
+//		car.transform.rotation = initialChunk.GetComponent<ChunkScript>().startPosition.rotation;
+		float x = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.x;
+		float y = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.y;
+		float z = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.z;
+//		finishLine.transform.position = new Vector3 ((iCol * 15) + x, car.transform.position.y + y, (iRow * 15) + z);
+		finishLine.transform.rotation = initialChunk.GetComponent<ChunkScript>().goalPosition.rotation;
 	}
 
 	public bool fillChunks(GameObject[,] matrix, GameObject iChunk, int iRow, int iCol, int row, int col, int L, int n) {
@@ -143,7 +143,7 @@ public class PlatformScript : MonoBehaviour {
 			for(int c = 0; c < matrix.GetLength(1); c++) {
 				GameObject chunk = matrix[r,c];
 				if(chunk != null) {
-					Vector3 position = new Vector3(spawnPoint.position.x + c * 15, 0, spawnPoint.position.z - r * 15);
+					Vector3 position = new Vector3(spawnPoint.position.x + c * 15, 0, spawnPoint.position.z + r * 15);
 					Instantiate(chunk, position, Quaternion.identity);
 				}
 			}

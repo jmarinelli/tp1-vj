@@ -1,13 +1,10 @@
-/*
-Script Created by FlatTutorials for "Car Controller kit".
-*/
 
-@script AddComponentMenu ("FlatTutorials/Scripts/Destroy Timer Script")
+
+@script AddComponentMenu ("/Destroy Timer Script")
 #pragma strict
-var destroyAfter : float = 7; 	//Waitin time to destroy a object in seconds
-private var timer : float; 	//Counting time
+var destroyAfter : float = 7; 	
+private var timer : float; 	
 
-//Calculation
 
 function Update () {
 timer += Time.deltaTime;

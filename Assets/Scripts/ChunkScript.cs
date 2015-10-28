@@ -10,6 +10,10 @@ public class ChunkScript : MonoBehaviour {
 	public int endPointCol;
 	public string label;
 	public float carRotation;
+	public float carPositionx;
+	public float carPositionz;
+	public Transform startPosition;
+	public Transform goalPosition;
 
 	// Use this for initialization
 	void Start () {

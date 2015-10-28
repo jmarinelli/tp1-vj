@@ -1,20 +1,16 @@
-/*
-Script Created by FlatTutorials for "Car Controller kit".
-*/
 
-@script AddComponentMenu ("FlatTutorials/Scripts/Car Camera Script")
+@script AddComponentMenu ("Scripts/Car Camera Script")
 #pragma strict
-var car : Transform;	//Car Transform
-var distance : float = 6.4;		//Distance from car
-var height : float = 1.4; 	//Value on Y axis according to car transform
-var rotationDamping : float = 3.0;	 //lower the value , faster the damping will be
-var heightDamping : float = 2.0;	 //lower the value , faster the damping will be
-var zoomRacio : float = 0.5;	//Change on FOV
-var DefaultFOV : float = 60;	//Min FOV
-var rotate : boolean = true;	//Look Back While Reversing
-private var rotationVector : Vector3;	//Rotation Vector
+var car : Transform;	
+var distance : float = 6.4;		
+var height : float = 1.4; 	
+var rotationDamping : float = 3.0;	
+var heightDamping : float = 2.0;	
+var zoomRacio : float = 0.5;	
+var DefaultFOV : float = 60;	
+var rotate : boolean = false;	
+private var rotationVector : Vector3;	
 
-//Positioning
 
 function LateUpdate () {
 var wantedAngel = rotationVector.y;
@@ -30,7 +26,6 @@ transform.position.y = myHeight;
 transform.LookAt(car);
 }
 
-//Rotation And FOV Control
 
 function FixedUpdate (){
 var localVilocity = car.InverseTransformDirection(car.GetComponent.<Rigidbody>().velocity);

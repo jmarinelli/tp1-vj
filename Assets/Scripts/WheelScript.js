@@ -1,32 +1,28 @@
-/*
-Script Created by FlatTutorials for "Car Controller kit".
-*/
 
-@script AddComponentMenu ("FlatTutorials/Scripts/Wheel Script")
+
+@script AddComponentMenu ("/Wheel Script")
 #pragma strict
-enum wheelType { Steer , SteerAndMotor , Motor , JustAWheel}; //types of wheel
-var typeOfWheel : wheelType;	//Object of wheelType
-var handBreakable : boolean = false;	//can apply handbrakes
-var invertSteer : boolean = false;	//invert the steer control
-var wheelTransform : Transform;		//Mesh of the wheel
-private var speedFactor : float;	//switch between steer angles
-private var wheelCollider : WheelCollider;		//wheel collider attached to the same game object
-private var carScript : CarControleScript;		//Scripts attached on the car object at the top
-private var mySidewayFriction : float;	//default value
-private var myForwardFriction : float;	//default value
-private var slipSidewayFriction : float;	//Custom value
-private var slipForwardFriction : float;	//Custom value
+enum wheelType { Steer , SteerAndMotor , Motor , JustAWheel}; 
+var typeOfWheel : wheelType;	
+var handBreakable : boolean = false;	
+var invertSteer : boolean = false;	
+var wheelTransform : Transform;		
+private var speedFactor : float;	
+private var wheelCollider : WheelCollider;	
+private var carScript : CarControleScript;	
+private var mySidewayFriction : float;	
+private var myForwardFriction : float;	
+private var slipSidewayFriction : float;	
+private var slipForwardFriction : float;
 
 
-//Start
+
 
 function Start () {
 wheelCollider = gameObject.GetComponent(WheelCollider);
 carScript = transform.root.gameObject.GetComponent("CarControleScript");
 SetValues();
 }
-
-//Assign values
 
 function SetValues(){
 
@@ -37,7 +33,6 @@ slipSidewayFriction = 0.085;
 
 }
 
-//Update
 
 function Update () {
 WheelPosition();
@@ -49,7 +44,7 @@ wheelTransform.localEulerAngles.y = wheelCollider.steerAngle - wheelTransform.lo
 
 }
 
-//Triggers to different types of wheels and for handbrake
+
 
 function FixedUpdate (){
 if (typeOfWheel == wheelType.Motor || typeOfWheel == wheelType.SteerAndMotor){
@@ -66,7 +61,6 @@ Decellaration();
 }
 }
 
-//Position the wheel
 
 function WheelPosition(){
 var hit : RaycastHit;
@@ -82,7 +76,6 @@ wheelTransform.position = wheelPos;
 }
 
 
-//Decellaration
 
 function Decellaration(){
 if (Input.GetButton("Vertical")==false){
@@ -93,7 +86,6 @@ wheelCollider.brakeTorque = 0;
 }
 }
 
-//Steer Control
 
 function SteerControle (){
 speedFactor = transform.parent.root.GetComponent.<Rigidbody>().velocity.magnitude/carScript.lowestSteerAtSpeed;
@@ -107,7 +99,6 @@ wheelCollider.steerAngle = currentSteerAngel;
 
 
 
-//Torque Control
 
 function TorqueControle (){
 if (carScript.currentSpeed < carScript.topSpeed && carScript.currentSpeed > -carScript.maxReverseSpeed && !carScript.braked){
@@ -118,7 +109,6 @@ wheelCollider.motorTorque =0;
 }
 }
 
-//Hand Brake
 
 function HandBrake(){
 if (carScript.braked){
@@ -143,7 +133,7 @@ SetRearSlip(myForwardFriction ,mySidewayFriction);
 }
 }
 
-//Reverse Slip
+
 
 function ReverseSlip(){
 if (carScript.currentSpeed <0){
@@ -154,7 +144,7 @@ SetFrontSlip(myForwardFriction ,mySidewayFriction);
 }
 }
 
-//Slip Settings
+
 
 function SetRearSlip (currentForwardFriction : float,currentSidewayFriction : float){
 if (typeOfWheel == wheelType.Motor || typeOfWheel == wheelType.SteerAndMotor && !carScript.braked){

@@ -1,13 +1,13 @@
 
-@script AddComponentMenu ("FlatTutorials/Scripts/Car Control Script")
+@script AddComponentMenu ("Scripts/Car Control Script")
 #pragma strict
 var centerOfMass : Vector3;	
 var dataWheel : WheelCollider;	
 var lowestSteerAtSpeed : float = 50;	
 var lowSpeedSteerAngel : float = 10;
 var highSpeedSteerAngel : float = 1;	
-var decellarationSpeed : float = 30;
-var maxTorque : float  = 50;	
+var decellarationSpeed : float = 5;
+var maxTorque : float  = 40;	
 var currentSpeed : float;		
 var topSpeed : float = 150;		
 var maxReverseSpeed : float = 50; 
@@ -17,7 +17,7 @@ var brakeLightMaterial : Material;
 var reverseLightMaterial : Material;	
 @HideInInspector	
 var braked : boolean = false;	
-var maxBrakeTorque : float = 100; 
+var maxBrakeTorque : float = 80; 
 var speedOMeterDial : Texture2D;
 var speedOMeterPointer : Texture2D;	
 var gearRatio : int[];		
@@ -107,18 +107,6 @@ GUI.DrawTexture(Rect(Screen.width - 300,Screen.height - 150,300,300),speedOMeter
 
 }
 
-
-
-function OnCollisionEnter (other : Collision){
-
-if (other.transform != transform && other.contacts.length != 0){
-for (var i = 0; i < other.contacts.length ; i++){
-Instantiate(spark,other.contacts[i].point,Quaternion.identity);
-var clone : GameObject = Instantiate(collisionSound,other.contacts[i].point,Quaternion.identity);
-clone.transform.parent = transform;
-}
-}
-}
 
 function OnDrawGizmos  () {
         Gizmos.color = Color.white;
