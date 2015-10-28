@@ -52,16 +52,16 @@ public class PlatformScript : MonoBehaviour {
 		Debug.Log (initialChunk.transform.position.x);
 		Debug.Log (initialChunk.transform.position.z);
 //		PrintMatrix (matrix);
-		InstantiateChunks (matrix);
-		car.transform.position = new Vector3 (iCol * 15, car.transform.position.y, iRow * 15);
-		car.transform.rotation = Quaternion.AngleAxis (initialChunk.GetComponent<ChunkScript> ().carRotation, Vector3.up);
+		InstantiateChunks (matrix, iRow, iCol);
+//		car.transform.position = new Vector3 (iCol * 15, car.transform.position.y, iRow * 15);
+//		car.transform.rotation = Quaternion.AngleAxis (initialChunk.GetComponent<ChunkScript> ().carRotation, Vector3.up);
 //		car.transform.position = initialChunk.GetComponent<ChunkScript>().startPosition.position;
 //		car.transform.rotation = initialChunk.GetComponent<ChunkScript>().startPosition.rotation;
-		float x = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.x;
-		float y = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.y;
-		float z = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.z;
+//		float x = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.x;
+//		float y = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.y;
+//		float z = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.z;
 //		finishLine.transform.position = new Vector3 ((iCol * 15) + x, car.transform.position.y + y, (iRow * 15) + z);
-		finishLine.transform.rotation = initialChunk.GetComponent<ChunkScript>().goalPosition.rotation;
+//		finishLine.transform.rotation = initialChunk.GetComponent<ChunkScript>().goalPosition.rotation;
 	}
 
 	public bool fillChunks(GameObject[,] matrix, GameObject iChunk, int iRow, int iCol, int row, int col, int L, int n) {
@@ -137,14 +137,20 @@ public class PlatformScript : MonoBehaviour {
 		print ("\n");
 	}
 
-	private void InstantiateChunks(GameObject[,] matrix) {
+	private void InstantiateChunks(GameObject[,] matrix, int iRow, int iCol) {
 		for (int r =0; r < matrix.GetLength(0); r++) {
 			string rowString = "|";
 			for(int c = 0; c < matrix.GetLength(1); c++) {
 				GameObject chunk = matrix[r,c];
 				if(chunk != null) {
 					Vector3 position = new Vector3(spawnPoint.position.x + c * 15, 0, spawnPoint.position.z + r * 15);
-					Instantiate(chunk, position, Quaternion.identity);
+					GameObject chunkInstance = (GameObject) Instantiate(chunk, position, Quaternion.identity);
+					if(r == iRow && c == iCol) {
+						car.transform.position = chunkInstance.GetComponent<ChunkScript>().startPosition.position;
+						car.transform.rotation = chunkInstance.GetComponent<ChunkScript>().startPosition.rotation;
+						finishLine.transform.position = chunkInstance.GetComponent<ChunkScript>().goalPosition.position;
+						finishLine.transform.rotation = chunkInstance.GetComponent<ChunkScript>().goalPosition.rotation;
+					}
 				}
 			}
 		}
