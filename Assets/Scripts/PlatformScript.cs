@@ -53,15 +53,7 @@ public class PlatformScript : MonoBehaviour {
 		Debug.Log (initialChunk.transform.position.z);
 //		PrintMatrix (matrix);
 		InstantiateChunks (matrix, iRow, iCol);
-//		car.transform.position = new Vector3 (iCol * 15, car.transform.position.y, iRow * 15);
-//		car.transform.rotation = Quaternion.AngleAxis (initialChunk.GetComponent<ChunkScript> ().carRotation, Vector3.up);
-//		car.transform.position = initialChunk.GetComponent<ChunkScript>().startPosition.position;
-//		car.transform.rotation = initialChunk.GetComponent<ChunkScript>().startPosition.rotation;
-//		float x = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.x;
-//		float y = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.y;
-//		float z = initialChunk.GetComponent<ChunkScript> ().goalPosition.transform.position.z;
-//		finishLine.transform.position = new Vector3 ((iCol * 15) + x, car.transform.position.y + y, (iRow * 15) + z);
-//		finishLine.transform.rotation = initialChunk.GetComponent<ChunkScript>().goalPosition.rotation;
+//		
 	}
 
 	public bool fillChunks(GameObject[,] matrix, GameObject iChunk, int iRow, int iCol, int row, int col, int L, int n) {
